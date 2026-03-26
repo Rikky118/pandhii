@@ -1,0 +1,407 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Birthday Surprise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+overflow-x:hidden;
+}
+
+/* VIDEO BACKGROUND */
+
+.video-bg{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+object-fit:cover;
+z-index:-2;
+display:none;
+}
+
+/* LOGIN */
+
+.login{
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background-image:url("login-bg.jpg");
+background-size:cover;
+background-position:center;
+}
+
+/* LOGIN BOX */
+
+.login-box{
+background:rgba(255,255,255,0.25);
+backdrop-filter:blur(12px);
+padding:45px;
+border-radius:25px;
+text-align:center;
+box-shadow:0 10px 40px rgba(0,0,0,0.3);
+width:320px;
+}
+
+.login-box h1{
+font-family:'Great Vibes',cursive;
+font-size:42px;
+color:#ff4f7b;
+}
+
+.login-box input{
+width:80%;
+padding:12px;
+border-radius:25px;
+border:none;
+margin-top:20px;
+text-align:center;
+}
+
+.login-box button{
+margin-top:20px;
+padding:10px 25px;
+border:none;
+border-radius:25px;
+background:#ff4f7b;
+color:white;
+cursor:pointer;
+}
+
+/* MAIN */
+
+.main{
+display:none;
+text-align:center;
+padding-top:80px;
+}
+
+/* WISH */
+
+.wish-section{
+color:white;
+max-width:800px;
+margin:auto;
+}
+
+.wish-text{
+font-family:'Great Vibes',cursive;
+font-size:52px;
+}
+
+.wish-sub{
+font-size:22px;
+margin-top:20px;
+min-height:120px;
+}
+
+/* BUTTON */
+
+.next-btn{
+margin-top:40px;
+padding:12px 30px;
+border:none;
+border-radius:25px;
+background:#ff4f7b;
+color:white;
+font-size:16px;
+cursor:pointer;
+}
+
+/* ALBUM */
+
+.album{
+display:none;
+margin-top:40px;
+}
+
+.album img{
+width:600px;
+height:800px;
+object-fit:cover;
+border-radius:20px;
+}
+
+/* MEMORIES */
+
+.memories{
+display:none;
+margin-top:40px;
+}
+
+.memories img{
+width:300px;
+height:500px;
+border-radius:15px;
+margin:10px;
+}
+
+/* VIDEO */
+
+.video{
+display:none;
+margin-top:40px;
+}
+
+video{
+width:40%;
+border-radius:20px;
+}
+
+/* HEARTS */
+
+.heart{
+position:fixed;
+bottom:-20px;
+font-size:20px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);}
+100%{transform:translateY(-100vh);}
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- VIDEO BACKGROUND -->
+
+<video autoplay muted loop class="video-bg" id="bgVideo">
+<source src="N eyes-2 copy.mp4">
+</video>
+
+<!-- LOGIN -->
+
+<div class="login" id="login">
+
+<audio id="loginMusic" autoplay loop>
+<source src="golden_brown copy.mp3">
+</audio>
+
+<div class="login-box">
+
+<h1>Birthday Surprise</h1>
+
+<input type="password" id="code" placeholder="Secret Code">
+
+<br>
+
+<button onclick="openPage()">Open</button>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main" id="main">
+
+<div class="wish-section" id="wish">
+
+<h1 class="wish-text">Happy Birthday 🤎🤍</h1>
+
+<p class="wish-sub" id="typing"></p>
+
+<button class="next-btn" onclick="showAlbum()">Open Album</button>
+
+</div>
+
+<!-- ALBUM -->
+
+<div class="album" id="album">
+<h2 style="color: white;">YOU</h2>
+<img src="ma copy.jpg">
+<img src="N copy.jpg">
+<img src="ni copy.jpg">
+<img src="1 copy.jpg">
+<img src="14i copy.jpg">
+<img src="14t copy.jpg">
+<img src="14h copy.jpg">
+<img src="14a copy.jpg">
+<img src="14y copy.jpg">
+<img src="14j copy.jpg">
+<img src="14nn copy.jpg">
+
+<br>
+<button class="next-btn" onclick="showMemories()">Next Memories</button>
+
+</div>
+
+<!-- MEMORIES -->
+
+<div class="memories" id="memories">
+
+<h2 style="color:white;">Memories</h2>
+
+<img src="14M copy.jpg">
+<img src="14Aa copy.jpg">
+<img src="14g copy.jpg">
+<img src="14ii.jpg.jpg">
+<img src="144 copy.jpg">
+<img src="14YY copy.jpg">
+
+<br>
+
+<button class="next-btn" onclick="showVideo()">Watch Video</button>
+
+</div>
+
+<!-- VIDEO -->
+
+<div class="video" id="video">
+
+<h2 style="color:white;">Special Video</h2>
+
+<video controls>
+<source src="Birthdayn copy.mp4">
+</video>
+
+</div>
+
+</div>
+
+<script>
+
+/* LOGIN */
+
+function openPage(){
+
+var code=document.getElementById("code").value;
+
+if(code=="Cute Pandhi"){
+
+document.getElementById("login").style.display="none";
+document.getElementById("main").style.display="block";
+document.getElementById("loginMusic").pause();
+document.getElementById("bgVideo").style.display="block";
+
+confetti({
+particleCount:200,
+spread:90
+});
+
+typingEffect();
+
+startHearts();
+
+}else{
+
+alert("Wrong Code");
+
+}
+
+}
+
+/* TYPING EFFECT */
+
+var message="On this beautiful day, I just want to remind you how special you are. Your smile brightens every moment and your presence makes everything better. May this birthday bring you endless happiness, love, and unforgettable memories.";
+
+var i=0;
+
+function typingEffect(){
+if(i<message.length){
+
+document.getElementById("typing").innerHTML+=message.charAt(i);
+i++;
+setTimeout(typingEffect,40);
+
+}
+
+}
+
+/* ALBUM */
+
+var images=["pic1.jpg","pic2.jpg","pic3.jpg"];
+var index=0;
+
+function showAlbum(){
+
+document.getElementById("wish").style.display="none";
+document.getElementById("album").style.display="block";
+
+slideShow();
+
+}
+
+function slideShow(){
+
+document.getElementById("slide").src=images[index];
+
+index++;
+
+if(index>=images.length){
+
+index=0;
+
+}
+
+setTimeout(slideShow,2000);
+
+}
+
+/* MEMORIES */
+
+function showMemories(){
+
+document.getElementById("album").style.display="none";
+document.getElementById("memories").style.display="block";
+
+}
+
+/* VIDEO */
+
+function showVideo(){
+
+document.getElementById("memories").style.display="none";
+document.getElementById("video").style.display="block";
+
+}
+
+/* HEARTS */
+
+function startHearts(){
+
+setInterval(function(){
+
+var heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML=Math.random()>0.5?"🤎":"🤍";
+
+heart.style.left=Math.random()*100+"%";
+
+heart.style.fontSize=(20+Math.random()*20)+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(function(){
+
+heart.remove();
+
+},6000);
+
+},500);
+
+}
+
+</script>
+
+</body>
+</html>
+```
+
+
